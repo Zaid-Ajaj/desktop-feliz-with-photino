@@ -11,11 +11,9 @@ Of course with fully type-safe data transport between client and server using [F
 ![image](photino-feliz.gif)
 
 ## Dependencies
-The only dependency on all operating systems is the .NET SDK.
+The dependencies need are the .NET SDK and Node.js
 
-On Linux this cannot be installed through the Snap package manager and must be installed using the scripted install method described here.
-
-On Windows 10, the Edge Dev Channel version needs to be installed from [Microsoft Edge Insider](https://www.microsoftedgeinsider.com/en-us/download)
+On Windows 10, the Edge Dev Channel version needs to be installed from [Microsoft Edge Insider](https://www.microsoftedgeinsider.com/en-us/download) to be able to view the browser
 
 ## Development
 
