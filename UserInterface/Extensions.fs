@@ -13,7 +13,7 @@ module Server =
         Remoting.createApi()
         |> Remoting.withRouteBuilder routerPaths
         |> Remoting.buildProxy<IServerApi>
-         
+
 [<RequireQualifiedAccess>]
 module StaticFile =
 
@@ -35,7 +35,7 @@ module Config =
         else foundValue
 
 // Stylesheet API
-// let private stylehsheet = Stylesheet.load "./fancy.css"
+// let private stylehsheet = Stylesheet.load "./fancy.module.css"
 // stylesheet.["fancy-class"] which returns a string
 module Stylesheet =
 

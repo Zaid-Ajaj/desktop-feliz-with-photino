@@ -81,8 +81,12 @@ let main args =
     |> Async.RunSynchronously
     |> ignore
 
-    printfn "Suave server started"
-    printfn ""
+    if isDevelopment then
+        printfn "Suave server started"
+        printfn "A Phontino window should pop up"
+        printfn "That window is running the user interface hosted by webpack at http://localhost:8080"
+        printfn "Meanwhile the (Suave) backend is running on http://localhost:5000"
+        printfn "Webpack dev server will proxy all HTTP calls to Suave during the development session"
 
     let window = new PhotinoWindow(title="Full Stack F# on Desktop (Using Photino)")
     window.Center().Load(Uri(desktopUrl)).WaitForClose()

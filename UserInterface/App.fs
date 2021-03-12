@@ -15,6 +15,6 @@ let SystemInfo() =
             Html.h1 $"Platform: {system.Platform}"
             Html.h3 [
                 prop.text  $"Version: {system.Version}"
-                prop.style [ style.color.red ]
+                prop.style [ style.color.mediumAquamarine ]
             ]
         ]

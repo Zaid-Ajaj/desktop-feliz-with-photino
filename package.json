@@ -1,14 +1,14 @@
 {
     "private": true,
     "scripts": {
-        "prestart": "dotnet tool restore",
-        "start": "dotnet fable watch ./src --run webpack serve --mode=development",
-        "prebuild": "dotnet tool restore",
-        "build": "dotnet fable ./src && webpack --mode=production",
-        "test:live": "dotnet fable watch tests --run webpack serve --mode=development --config ./webpack.tests.js",
-        "build:test": "dotnet fable tests && webpack --config webpack.tests.js",
-        "pretest": "dotnet tool restore",
-        "test": "dotnet fable tests --outDir dist/tests && mocha dist/tests -r esm"
+      "prestart": "dotnet tool restore && dotnet fable clean --yes",
+      "start": "dotnet fable watch ./UserInterface --run webpack serve --mode=development",
+      "prebuild": "dotnet tool restore",
+      "build": "dotnet fable ./UserInterface && webpack --mode=production",
+      "test:live": "dotnet fable watch ./UserInterface.Tests --run webpack serve --mode=development --config ./webpack.tests.js",
+      "build:test": "dotnet fable ./UserInterface.Tests && webpack --config webpack.tests.js",
+      "pretest": "dotnet tool restore",
+      "test": "dotnet fable ./UserInterface.Tests --outDir dist/tests && mocha dist/tests -r esm"
     },
     "dependencies": {
         "bulma": "^0.9.1",

@@ -21,8 +21,8 @@ module.exports = (env, argv) => {
     var CONFIG = {
         // The tags to include the generated JS and CSS will be automatically injected in the HTML template
         // See https://github.com/jantimon/html-webpack-plugin
-        indexHtmlTemplate: "./tests/index.html",
-        fsharpEntry: "./tests/Tests.fs.js",
+        indexHtmlTemplate: "./UserInterface.Tests/index.html",
+        fsharpEntry: "./UserInterface.Tests/Tests.fs.js",
         outputDir: "./dist",
         assetsDir: "./public",
         devServerPort: 8085,
@@ -136,10 +136,7 @@ module.exports = (env, argv) => {
                         ? MiniCssExtractPlugin.loader
                         : 'style-loader',
                     {
-                        loader: 'css-loader',
-                        options: {
-                            modules: true
-                        }
+                        loader: 'css-loader'
                     },
                     {
                         loader: 'sass-loader',

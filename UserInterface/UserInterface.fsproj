@@ -16,6 +16,6 @@
         <PackageReference Include="Feliz.UseDeferred" Version="1.4.1" />
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\Shared\Shared.fsproj" />
+        <ProjectReference Include="..\Shared\Shared.fsproj" />
     </ItemGroup>
 </Project>
