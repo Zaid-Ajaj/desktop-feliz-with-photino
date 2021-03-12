@@ -1,13 +1,21 @@
 # Feliz on Desktop with Photino (Highly Experimental)
 
-A full stack F# application on desktop with the help of [Photino](https://github.com/tryphotino/photino.NET). 
+A full stack F# application on desktop with the help of [Photino](https://www.tryphotino.io).
 
-Phontino hosts a lightweight chromioum instance in a desktop window and this application embeds a full web application in it. 
+Phontino hosts a lightweight chromioum instance in a desktop window and this application embeds a full web application in it.
 
-Using [Suave](https://github.com/SuaveIO/suave) as an extremely lightweight web server for the backend and [Feliz](https://github.com/Zaid-Ajaj/Feliz)/React on the frontend. 
+Using [Suave](https://github.com/SuaveIO/suave) as an extremely lightweight web server for the backend and [Feliz](https://github.com/Zaid-Ajaj/Feliz)/React on the frontend.
 
 Of course with fully type-safe data transport between client and server using [Fable.Remoting](https://github.com/Zaid-Ajaj/Fable.Remoting)
 
+![image](photino-feliz.gif)
+
+## Dependencies
+The only dependency on all operating systems is the .NET SDK.
+
+On Linux this cannot be installed through the Snap package manager and must be installed using the scripted install method described here.
+
+On Windows 10, the Edge Dev Channel version needs to be installed from [Microsoft Edge Insider](https://www.microsoftedgeinsider.com/en-us/download)
 
 ## Development
 
@@ -24,6 +32,10 @@ While the frontend is running, go the `./Desktop` and run the application in deb
 dotnet restore
 dotnet run
 ```
-This will do two things: 
+This will do two things:
  - Runs a Suave backend in the background on port 5000 (API for the frontend)
  - Opens a Photino window navigating to localhost:8080 which is where the frontend is being hosted
+
+## Work In Progress
+
+ - Build automation for packaging and running in release mode
