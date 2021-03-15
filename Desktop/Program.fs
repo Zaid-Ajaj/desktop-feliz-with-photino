@@ -11,8 +11,9 @@ open Shared
 open Fable.Remoting.Server
 open Fable.Remoting.Suave
 open PhotinoNET
+open System.IO
 
-let serverApi : IServerApi = { 
+let serverApi : IServerApi = {
     Counter = fun () -> async {
         return { Value = 10 }
     }
@@ -25,56 +26,60 @@ let serverApi : IServerApi = {
         }
     }
 }
- 
+
 let webApi =
     Remoting.createApi()
     |> Remoting.fromValue serverApi
     |> Remoting.withRouteBuilder routerPaths
     |> Remoting.buildWebPart
 
-let rnd = System.Random()
+let random = Random()
+// TODO: find a better way for choosing a free port
+let randomPort = random.Next(9000, 10000)
 
-let randomPort = rnd.Next(9000, 10000)
+let webApp = choose [
+    webApi
+    Files.browseHome
+]
 
-let webApp = choose [ webApi; GET >=> OK "Welcome to full stack F#" ]
-
-let isDevelopment = 
+let isDevelopment =
     #if DEBUG
     true
-    #else 
+    #else
     false
     #endif
 
-let suavePort = 
-    if isDevelopment 
+let suavePort =
+    if isDevelopment
     // Suave web server has to run on port 5000
     // during development because webpack-dev-server proxies
     // requests to the backend here
-    then 5000 
+    then 5000
     else randomPort
 
-let desktopUrl = 
-    if isDevelopment 
+let desktopUrl =
+    if isDevelopment
     // during development assume webpack dev server is running
-    then "http://localhost:8080" 
-    // in release mode we run Suave on a random port 
+    then "http://localhost:8080"
+    // in release mode we run Suave on a random port
     // which will host the static files generated
-    else $"http://localhost:{randomPort}" 
+    else $"http://localhost:{randomPort}/index.html"
+
+/// A dummy interface that will tell us where this assembly is built
+type IAssemblyTag = interface end
 
 [<EntryPoint; STAThread>]
-let main args = 
-
+let main args =
     let cts = new CancellationTokenSource()
-
+    let executableDirectory = Directory.GetParent(typeof<IAssemblyTag>.Assembly.Location).FullName
     let suaveConfig =
         { defaultConfig with
-            homeFolder = Some "./wwwwroot"
+            homeFolder = Some (Path.Combine(executableDirectory, "wwwroot"))
             bindings   = [ HttpBinding.createSimple HTTP "127.0.0.1" suavePort ]
             bufferSize = 2048
             cancellationToken = cts.Token }
-    
+
     let listening, server = startWebServerAsync suaveConfig webApp
-    
     Async.Start server
 
     listening

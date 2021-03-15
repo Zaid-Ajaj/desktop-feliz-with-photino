@@ -34,6 +34,46 @@ This will do two things:
  - Runs a Suave backend in the background on port 5000 (API for the frontend)
  - Opens a Photino window navigating to localhost:8080 which is where the frontend is being hosted
 
-## Work In Progress
+## Build and package the application 
 
- - Build automation for packaging and running in release mode
+The `Build` project includes a couple of build targets to package up the application. 
+
+```bash
+cd ./Build
+# windows
+dotnet run -- build-win64
+# linux
+dotnet run -- build-linux64
+# macOS
+dotnet run -- build-osx64
+```
+You will find the application packaged inside the directory
+```
+Windows -> {root}/Desktop/bin/Release/net5.0/win10-x64/publish
+Linux -> {root}/Desktop/bin/Release/net5.0/linux-x64/publish
+MacOS -> {root}/Desktop/bin/Release/net5.0/osx-x64/publish
+```
+Feel free to extend the packaging function yourself:
+```fs
+let buildFor(runtime: Runtime) = 
+    // build the desktop app in release mode
+    Dotnet.Publish(desktop, [
+        Dotnet.Configuration(Release)
+        Dotnet.Runtime(runtime)
+        Dotnet.SelfContained()
+        Dotnet.PublishSingleFile()
+    ])
+    // build the frontend 
+    Npm.Run("build", solutionRoot)
+    // copy client artifacts to the output
+    let appDist = path [ desktop; "bin"; "Release"; "net5.0"; runtime.Format(); "publish" ]
+    let clientTarget = path [ appDist; "wwwroot" ]
+    Shell.copyDir clientTarget clientDist (fun fileToCopy -> true)
+
+// Windows
+buildFor(Runtime.Win10_x64)
+// Linux
+buildFor(Runtime.Linux_x64)
+// macOS
+buildFor(Runtime.Osx_x64)
+```
