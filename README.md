@@ -64,6 +64,7 @@ let buildFor(runtime: Runtime) =
         Dotnet.PublishSingleFile()
     ])
     // build the frontend 
+    Npm.Install(solutionRoot)
     Npm.Run("build", solutionRoot)
     // copy client artifacts to the output
     let appDist = path [ desktop; "bin"; "Release"; "net5.0"; runtime.Format(); "publish" ]

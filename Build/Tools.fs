@@ -100,6 +100,7 @@ type Runtime =
     | Osx_11_0_x64
     /// macOS 11.01 Big Sur
     | Osx_11_0_Arm64
+    
     with member self.Format() = 
         match self with 
         | Runtime.Win_x86 -> "win-x86"
@@ -123,6 +124,10 @@ type Npm  =
     static member Run(script: string, cwd: string) = 
         let exitCode = Shell.Exec(npm, $"run {script}", cwd)
         if exitCode <> 0 then failwithf "Could not execute npm run %s" script
+
+    static member Install(cwd: string) = 
+        let exitCode = Shell.Exec(npm, $"install", cwd)
+        if exitCode <> 0 then failwith "Could not execute npm install"
 
 type Dotnet = 
     static member Build(cwd: string, arguments: string) = 
