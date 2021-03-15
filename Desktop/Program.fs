@@ -9,6 +9,7 @@ open Fable.Remoting.Server
 open Fable.Remoting.Suave
 open PhotinoNET
 open System.IO
+open System.Reflection
 
 let serverApi : IServerApi = {
     Counter = fun () -> async {
@@ -16,7 +17,6 @@ let serverApi : IServerApi = {
     }
 
     SystemInfo = fun () -> async {
-        do! Async.Sleep 1500
         return {
             Platform = Environment.OSVersion.Platform.ToString()
             Version = Environment.OSVersion.VersionString
@@ -62,16 +62,15 @@ let desktopUrl =
     // which will host the static files generated
     else $"http://localhost:{randomPort}/index.html"
 
-/// A dummy interface that will tell us where this assembly is built
-type IAssemblyTag = interface end
-
 [<EntryPoint; STAThread>]
 let main args =
     let cts = new CancellationTokenSource()
-    let executableDirectory = Directory.GetParent(typeof<IAssemblyTag>.Assembly.Location).FullName
+    let currentAssembly = Assembly.GetExecutingAssembly()
+    let executableDirectory = Directory.GetParent(currentAssembly.Location).FullName
+    let frontendAssets = Path.Combine(executableDirectory, "wwwroot")
     let suaveConfig =
         { defaultConfig with
-            homeFolder = Some (Path.Combine(executableDirectory, "wwwroot"))
+            homeFolder = Some frontendAssets
             bindings   = [ HttpBinding.createSimple HTTP "127.0.0.1" suavePort ]
             bufferSize = 2048
             cancellationToken = cts.Token }

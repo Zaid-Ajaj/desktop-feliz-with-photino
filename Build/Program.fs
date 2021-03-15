@@ -12,9 +12,10 @@ let desktop = path [ solutionRoot; "Desktop" ]
 let clientDist = path [ solutionRoot; "dist" ]
 
 let buildFor(runtime: Runtime) = 
+    let releaseMode = Release
     // build the desktop app in release mode
     Dotnet.Publish(desktop, [
-        Dotnet.Configuration(Release)
+        Dotnet.Configuration(releaseMode)
         Dotnet.Runtime(runtime)
         Dotnet.SelfContained()
         Dotnet.PublishSingleFile()
@@ -22,10 +23,11 @@ let buildFor(runtime: Runtime) =
     // build the frontend 
     Npm.Install(solutionRoot)
     Npm.Run("build", solutionRoot)
-    // copy client artifacts to the output
-    let appDist = path [ desktop; "bin"; "Release"; "net5.0"; runtime.Format(); "publish" ]
-    let clientTarget = path [ appDist; "wwwroot" ]
-    Shell.copyDir clientTarget clientDist (fun fileToCopy -> true)
+    // copy built client artifacts to the output
+    // the built application expects the static files to be at wwwroot
+    // relative to the executable directory
+    let clientTarget = path [ desktop; "bin"; releaseMode.Format(); "net5.0"; runtime.Format(); "publish"; "wwwroot" ]
+    Copy.DirectoryFrom(clientDist).To(clientTarget)
 
 [<EntryPoint>]
 let main argv =

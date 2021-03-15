@@ -24,7 +24,9 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Desktop", "Desktop\Desktop.
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Shared", "Shared\Shared.fsproj", "{56A81B2C-B006-4E14-B90C-A9CC82FB347E}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Build", "Build\Build.fsproj", "{982608AE-FA19-46D8-B615-C24E40BFE6C4}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Build", "Build\Build.fsproj", "{982608AE-FA19-46D8-B615-C24E40BFE6C4}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Desktop.Tests", "Desktop.Tests\Desktop.Tests.fsproj", "{2359EB95-2034-43C9-B817-FA7C0E6D62F7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,6 +54,10 @@ Global
 		{982608AE-FA19-46D8-B615-C24E40BFE6C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{982608AE-FA19-46D8-B615-C24E40BFE6C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{982608AE-FA19-46D8-B615-C24E40BFE6C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2359EB95-2034-43C9-B817-FA7C0E6D62F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2359EB95-2034-43C9-B817-FA7C0E6D62F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2359EB95-2034-43C9-B817-FA7C0E6D62F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2359EB95-2034-43C9-B817-FA7C0E6D62F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

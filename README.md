@@ -62,20 +62,17 @@ MacOS -> {root}/Desktop/bin/Release/net5.0/osx-x64/publish
 Feel free to extend the packaging function yourself:
 ```fs
 let buildFor(runtime: Runtime) = 
-    // build the desktop app in release mode
+    let releaseMode = Release
     Dotnet.Publish(desktop, [
-        Dotnet.Configuration(Release)
+        Dotnet.Configuration(releaseMode)
         Dotnet.Runtime(runtime)
         Dotnet.SelfContained()
         Dotnet.PublishSingleFile()
     ])
-    // build the frontend 
     Npm.Install(solutionRoot)
     Npm.Run("build", solutionRoot)
-    // copy client artifacts to the output
-    let appDist = path [ desktop; "bin"; "Release"; "net5.0"; runtime.Format(); "publish" ]
-    let clientTarget = path [ appDist; "wwwroot" ]
-    Shell.copyDir clientTarget clientDist (fun fileToCopy -> true)
+    let clientTarget = path [ desktop; "bin"; releaseMode.Format(); "net5.0"; runtime.Format(); "publish"; "wwwroot" ]
+    Copy.DirectoryFrom(clientDist).To(clientTarget)
 
 // Windows
 buildFor(Runtime.Win10_x64)

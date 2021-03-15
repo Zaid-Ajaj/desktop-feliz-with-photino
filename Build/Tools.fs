@@ -31,6 +31,7 @@ module CreateProcess =
 
         CreateProcess.fromRawCommand program' args'
     
+/// <summary>Finds the executable path from the name of the tool</summary>
 let executablePath (tool: string) = 
     let locator = 
         if Environment.isWindows
@@ -56,23 +57,38 @@ let dotnet = executablePath "dotnet"
 let npm = executablePath "npm"
 let node = executablePath "node"
 
+/// <summary>Build mode</summary>
 type Mode = 
     | Debug
     | Release
+    with 
+        member self.Format() = 
+            match self with 
+            | Debug -> "Debug"
+            | Release -> "Release"
 
+/// <summary>The different runtime targets for which the application can be packaged</summary>
 [<RequireQualifiedAccess>]
 type Runtime = 
+    /// Portable windows
     | Win_x86
+    /// Portable windows
     | Win_x64 
+    /// Portable windows
     | Win_Arm
+    /// Portable windows
     | Win_Arm64
+    /// Windows 7 / Windows Server 2008 R2
     | Win7_x64
+    /// Windows 7 / Windows Server 2008 R2 
     | Win7_x86
-    | Win7_Arm
-    | Win7_Arm64
+    /// Windows 10 / Windows Server 2016
     | Win10_x64
+    /// Windows 10 / Windows Server 2016
     | Win10_x86
+    /// Windows 10 / Windows Server 2016
     | Win10_Arm
+    /// Windows 10 / Windows Server 2016
     | Win10_Arm64
     /// Most desktop distributions like CentOS, Debian, Fedora, Ubuntu, and derivatives
     | Linux_x64
@@ -109,16 +125,23 @@ type Runtime =
             | Runtime.Win_Arm64 -> "win-arm64"
             | Runtime.Win7_x64 -> "win7-x64"
             | Runtime.Win7_x86 -> "win7-x86"
-            | Runtime.Win7_Arm -> "win7-arm"
-            | Runtime.Win7_Arm64 -> "win7-arm64"
             | Runtime.Win10_x64 -> "win10-x64"
             | Runtime.Win10_x86 -> "win10-x86"
             | Runtime.Win10_Arm -> "win10-arm"
             | Runtime.Win10_Arm64 -> "win10-arm64"
             | Runtime.Linux_x64 -> "linux-x64"
             | Runtime.Linux_Musl_x64 -> "linux-musl-x64"
+            | Runtime.Linux_Arm -> "linux-arm"
+            | Runtime.Linux_Arm_x64 -> "linux-arm64"
             | Runtime.Osx_x64 -> "osx-x64"
-            | otherwise -> failwithf "Runtime value %A was not mapped yet" otherwise
+            | Runtime.Osx_10_10_x64 -> "osx.10.10-x64"
+            | Runtime.Osx_10_11_x64 -> "osx.10.11-x64"
+            | Runtime.Osx_10_12_x64 -> "osx.10.12-x64"
+            | Runtime.Osx_10_13_x64 -> "osx.10.13-x64"
+            | Runtime.Osx_10_14_x64 -> "osx.10.14-x64"
+            | Runtime.Osx_10_15_x64 -> "osx.10.15-x64"
+            | Runtime.Osx_11_0_x64 -> "osx.11.0-x64"
+            | Runtime.Osx_11_0_Arm64 -> "osx.11.0-arm64"
 
 type Npm  = 
     static member Run(script: string, cwd: string) = 
@@ -163,7 +186,7 @@ type Dotnet =
         if value 
         then "-p:PublishTrimmed=true" 
         else "" 
-    
+
     static member PublishSingleFile() = "-p:PublishTrimmed=true"
 
     static member PublishSingleFile(value: bool) = 
@@ -179,4 +202,15 @@ type Dotnet =
 
         let exitCode = Shell.Exec(dotnet, $"publish {formattedArgs}", cwd)
         if exitCode <> 0 
-        then failwithf "Could not execute dotnet publish --configuration Release at '%s'" cwd 
+        then failwithf "Could not execute dotnet publish at '%s'" cwd 
+
+type PasteMethods = 
+    abstract To : string -> unit 
+
+type Copy = 
+    static member DirectoryFrom(source: string) = 
+        { 
+            new PasteMethods with 
+               member self.To(target) = 
+                   Fake.IO.Shell.copyDir target source (fun fileToCopy -> true)
+        }
