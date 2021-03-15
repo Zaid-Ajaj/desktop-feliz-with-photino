@@ -1,18 +1,20 @@
 # Feliz on Desktop with Photino (Experimental)
 
-Build a desktop application by embedding a small full stack F# web application with the help of [Photino](https://www.tryphotino.io).
+Build a desktop application by embedding a small full stack F# web application in it with the help of [Photino](https://www.tryphotino.io).
 
-Phontino hosts a lightweight chromioum instance in a desktop window and this application embeds a full web application in it.
+Phontino hosts a lightweight chromium instance in a desktop window and this application embeds a full web application in it.
 
-Using [Suave](https://github.com/SuaveIO/suave) as an extremely lightweight web server for the backend and [Feliz](https://github.com/Zaid-Ajaj/Feliz)/React on the frontend.
+Using [Suave](https://github.com/SuaveIO/suave) as a mini embedded web server for the backend and [Feliz](https://github.com/Zaid-Ajaj/Feliz)/React on the frontend.
 
-The frontend communicates with the backend via HTTP to access system APIs that are otherwise not available from the browser window.
+The frontend communicates with the backend via HTTP to access system APIs that are otherwise unavailable from the browser window.
 
 The data transport between client and server is fully type-safe thanks to [Fable.Remoting](https://github.com/Zaid-Ajaj/Fable.Remoting)
 
-Here is a gif of the application running during development. Notice how things like hot module reloading works out of the box so that we can edit the UI code and you see the changes immediately.
+Here is a gif of the application running during development. Notice how things like hot module reloading work out of the box so that we can edit the UI code and you see the changes immediately without having to reload the application.
 
 ![image](photino-feliz.gif)
+
+> If you want, you could develop the application in the browser by simply navigating to `http://localhost:8080` but it's better to see how it looks like in the desktop window.
 
 ## Dependencies
 The dependencies need are the .NET SDK (v5.0+) and Node.js (v12+)
