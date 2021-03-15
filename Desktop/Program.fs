@@ -4,9 +4,6 @@ open System
 open System.Threading
 
 open Suave
-open Suave.Filters
-open Suave.Successful
-open Suave.Operators
 open Shared
 open Fable.Remoting.Server
 open Fable.Remoting.Suave
