@@ -100,25 +100,25 @@ type Runtime =
     | Osx_11_0_x64
     /// macOS 11.01 Big Sur
     | Osx_11_0_Arm64
-    
-    with member self.Format() = 
-        match self with 
-        | Runtime.Win_x86 -> "win-x86"
-        | Runtime.Win_x64 -> "win-x64"
-        | Runtime.Win_Arm -> "win-arm"
-        | Runtime.Win_Arm64 -> "win-arm64"
-        | Runtime.Win7_x64 -> "win7-x64"
-        | Runtime.Win7_x86 -> "win7-x86"
-        | Runtime.Win7_Arm -> "win7-arm"
-        | Runtime.Win7_Arm64 -> "win7-arm64"
-        | Runtime.Win10_x64 -> "win10-x64"
-        | Runtime.Win10_x86 -> "win10-x86"
-        | Runtime.Win10_Arm -> "win10-arm"
-        | Runtime.Win10_Arm64 -> "win10-arm64"
-        | Runtime.Linux_x64 -> "linux-x64"
-        | Runtime.Linux_Musl_x64 -> "linux-musl-x64"
-        | Runtime.Osx_x64 -> "osx-x64"
-        | otherwise -> failwithf "Runtime value %A was not mapped yet" otherwise
+    with 
+        member self.Format() = 
+            match self with 
+            | Runtime.Win_x86 -> "win-x86"
+            | Runtime.Win_x64 -> "win-x64"
+            | Runtime.Win_Arm -> "win-arm"
+            | Runtime.Win_Arm64 -> "win-arm64"
+            | Runtime.Win7_x64 -> "win7-x64"
+            | Runtime.Win7_x86 -> "win7-x86"
+            | Runtime.Win7_Arm -> "win7-arm"
+            | Runtime.Win7_Arm64 -> "win7-arm64"
+            | Runtime.Win10_x64 -> "win10-x64"
+            | Runtime.Win10_x86 -> "win10-x86"
+            | Runtime.Win10_Arm -> "win10-arm"
+            | Runtime.Win10_Arm64 -> "win10-arm64"
+            | Runtime.Linux_x64 -> "linux-x64"
+            | Runtime.Linux_Musl_x64 -> "linux-musl-x64"
+            | Runtime.Osx_x64 -> "osx-x64"
+            | otherwise -> failwithf "Runtime value %A was not mapped yet" otherwise
 
 type Npm  = 
     static member Run(script: string, cwd: string) = 

@@ -1,19 +1,23 @@
-# Feliz on Desktop with Photino (Highly Experimental)
+# Feliz on Desktop with Photino (Experimental)
 
-A full stack F# application on desktop with the help of [Photino](https://www.tryphotino.io).
+Build a desktop application by embedding a small full stack F# web application with the help of [Photino](https://www.tryphotino.io).
 
 Phontino hosts a lightweight chromioum instance in a desktop window and this application embeds a full web application in it.
 
 Using [Suave](https://github.com/SuaveIO/suave) as an extremely lightweight web server for the backend and [Feliz](https://github.com/Zaid-Ajaj/Feliz)/React on the frontend.
 
-Of course with fully type-safe data transport between client and server using [Fable.Remoting](https://github.com/Zaid-Ajaj/Fable.Remoting)
+The frontend communicates with the backend via HTTP to access system APIs that are otherwise not available from the browser window.
+
+The data transport between client and server is fully type-safe thanks to [Fable.Remoting](https://github.com/Zaid-Ajaj/Fable.Remoting)
+
+Here is a gif of the application running during development. Notice how things like hot module reloading works out of the box so that we can edit the UI code and you see the changes immediately.
 
 ![image](photino-feliz.gif)
 
 ## Dependencies
-The dependencies need are the .NET SDK and Node.js
+The dependencies need are the .NET SDK (v5.0+) and Node.js (v12+)
 
-On Windows 10, the Edge Dev Channel version needs to be installed from [Microsoft Edge Insider](https://www.microsoftedgeinsider.com/en-us/download) to be able to view the browser
+When developing on Windows 10, the Edge Dev Channel version needs to be installed from [Microsoft Edge Insider](https://www.microsoftedgeinsider.com/en-us/download) to be able to view the browser
 
 ## Development
 
