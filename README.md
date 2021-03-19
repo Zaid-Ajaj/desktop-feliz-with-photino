@@ -27,6 +27,7 @@ Before doing anything, start with installing npm dependencies into the client us
 
 Then to start development mode with hot module reloading, run:
 ```bash
+npm install  # Get dependencies used, like webpack
 npm start
 ```
 This will start the development server after compiling the project, once it is finished, navigate to http://localhost:8080 to view the application .
