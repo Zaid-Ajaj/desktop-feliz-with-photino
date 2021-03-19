@@ -2,6 +2,7 @@
 open System.IO
 open Fake.IO
 open Tools
+open System.Text
 
 let path xs = Path.Combine(Array.ofList xs)
 
@@ -11,7 +12,7 @@ let desktop = path [ solutionRoot; "Desktop" ]
 
 let clientDist = path [ solutionRoot; "dist" ]
 
-let buildFor(runtime: Runtime) = 
+let buildFor(runtime: Runtime) =
     let releaseMode = Release
     // build the desktop app in release mode
     Dotnet.Publish(desktop, [
@@ -20,17 +21,21 @@ let buildFor(runtime: Runtime) =
         Dotnet.SelfContained()
         Dotnet.PublishSingleFile()
     ])
-    // build the frontend 
+    // build the frontend
     Npm.Install(solutionRoot)
     Npm.Run("build", solutionRoot)
     // copy built client artifacts to the output
     // the built application expects the static files to be at wwwroot
     // relative to the executable directory
-    let clientTarget = path [ desktop; "bin"; releaseMode.Format(); "net5.0"; runtime.Format(); "publish"; "wwwroot" ]
+    let executableOutput = path [ desktop; "bin"; releaseMode.Format(); "net5.0"; runtime.Format(); "publish" ]
+    let clientTarget = path [ executableOutput; "wwwroot" ]
     Copy.DirectoryFrom(clientDist).To(clientTarget)
+    printfn $"✔️  The application was built successfully for '{runtime.Format()}'"
+    printfn $"✔️  Find the build artifacts at {executableOutput}"
 
 [<EntryPoint>]
 let main argv =
+    Console.OutputEncoding <- Encoding.UTF8
     match argv with
     | [| "build-win64"   |] -> buildFor(Runtime.Win10_x64)
     | [| "build-linux64" |] -> buildFor(Runtime.Linux_x64)
