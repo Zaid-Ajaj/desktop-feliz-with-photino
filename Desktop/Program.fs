@@ -75,6 +75,7 @@ let main args =
             bufferSize = 2048
             cancellationToken = cts.Token }
 
+    printfn "Starting up server"
     let listening, server = startWebServerAsync suaveConfig webApp
     Async.Start server
 
@@ -89,6 +90,6 @@ let main args =
         printfn "Meanwhile the (Suave) backend is running on http://localhost:5000"
         printfn "Webpack dev server will proxy all HTTP calls to Suave during the development session"
 
-    let window = new PhotinoWindow(title="Full Stack F# on Desktop (Using Photino)")
+    let window = new PhotinoWindow(Title="Full Stack F# on Desktop (Using Photino)")
     window.Center().Load(Uri(desktopUrl)).WaitForClose()
     0

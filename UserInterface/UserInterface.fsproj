@@ -9,8 +9,8 @@
         <Compile Include="Main.fs" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Fable.Remoting.Client" Version="7.9.0" />
-        <PackageReference Include="Feliz" Version="1.43.0" />
+        <PackageReference Include="Fable.Remoting.Client" Version="7.16.0" />
+        <PackageReference Include="Feliz" Version="1.51.0" />
         <PackageReference Include="Feliz.Router" Version="3.8.0" />
         <PackageReference Include="Fable.DateFunctions" Version="3.7.0" />
         <PackageReference Include="Feliz.UseDeferred" Version="1.4.1" />
