@@ -3,10 +3,10 @@ module App
 open Feliz
 open Feliz.UseDeferred
 
-[<ReactComponent>]
 /// <summary>
 /// A React component that loads the system information from the backend API and shows on screen
 /// </summary>
+[<ReactComponent>]
 let SystemInfo() =
     let data = React.useDeferred(Server.Api.SystemInfo(), [| |])
     match data with
